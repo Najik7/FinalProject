@@ -33,12 +33,22 @@ namespace FinalProject.Controllers
             var result = await _signInManager.PasswordSignInAsync(model.Login,model.Password,false,false);
             if (result.Succeeded)
             {
-                return Redirect(model.ReturnURL);
+                return Redirect(model.ReturnURL ?? "/Home/Index");
             }
             
             ModelState.AddModelError("Login", "Невенрный логин или пароль!");
             
             return View(model);
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            
+            return RedirectToAction("Login");
+        }
+        
+        
+        
     }
 }
