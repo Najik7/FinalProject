@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FinalProject.Context;
+using FinalProject.Context.Models;
+using FinalProject.Seeds;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +23,11 @@ namespace FinalProject
             using (var scope = host.Services.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 await context.Database.MigrateAsync();
+                await DefaultRolesSeed.AddDefaultRolesAsync(roleManager);
+                await DefaultAdminSeed.AddDefaultAdminAsync(userManager);
             }
 
             await host.RunAsync();

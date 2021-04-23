@@ -32,7 +32,24 @@ namespace FinalProject
                 opt.UseSqlServer(Configuration.GetConnectionString(name: "Default")).UseLazyLoadingProxies();
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 4;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+
+                opt.User.RequireUniqueEmail = true;
+                
+            }).AddEntityFrameworkStores<AppDbContext>();
+
+            services.AddAuthentication().AddCookie();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan=TimeSpan.FromMinutes(30);
+                options.SlidingExpiration = true;
+            });
             
             services.AddControllersWithViews();
         }
