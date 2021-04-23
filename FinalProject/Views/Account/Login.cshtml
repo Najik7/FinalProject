@@ -1,0 +1,15 @@
+﻿@model FinalProject.ViewModels.LoginViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div asp-validation-summary="All">
+</div>
+<form action="Login" method="post">
+    <input type="text" asp-for="Login">
+    <input type="password" asp-for="Password">
+    <input type="hidden" asp-for="ReturnURL">
+    <input type="submit" value="Вход">
+</form>
