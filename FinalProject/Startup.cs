@@ -49,6 +49,8 @@ namespace FinalProject
             {
                 options.ExpireTimeSpan=TimeSpan.FromMinutes(30);
                 options.SlidingExpiration = true;
+
+                options.AccessDeniedPath = "/Home/Privacy";
             });
             
             services.AddControllersWithViews();
