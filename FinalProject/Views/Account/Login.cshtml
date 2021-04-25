@@ -4,12 +4,22 @@
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
-
+<div style="text-align: center">
+    
 <div asp-validation-summary="All">
 </div>
-<form action="Login" method="post">
-    <input type="text" asp-for="Login">
-    <input type="password" asp-for="Password">
-    <input type="hidden" asp-for="ReturnURL">
-    <input type="submit" value="Вход">
-</form>
+    <form action="Login" method="post">
+        <div>
+            <input type="text" placeholder="Login" asp-for="Login">
+        </div>
+        <div>
+            <input type="password" placeholder="Password" asp-for="Password">
+        </div>
+        <div>
+            <input type="hidden" asp-for="ReturnURL">
+        </div>
+        <div>
+        <input type="submit" value="Вход">
+        </div>
+    </form>
+</div>
