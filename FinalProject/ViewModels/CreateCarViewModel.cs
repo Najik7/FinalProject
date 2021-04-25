@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
-namespace FinalProject.Context.Models
+namespace FinalProject.ViewModels
 {
-    public class Car
+    public class CreateCarViewModel
     {
-        public int Id { get; set; }
         public string Model { get; set; }
         public int Doors { get; set; }
         public int Passengers { get; set; }
@@ -18,23 +18,18 @@ namespace FinalProject.Context.Models
         public bool IsFree { get; set; }
         public int FromAge { get; set; }
         public int TilAge { get; set; }
-        public string ImagePath { get; set; }
+        public IFormFile Image { get; set; }
 
-        public virtual ICollection<Order>Orders { get; set; }
-        
-        public virtual ICollection<CarFuelType>CarFuelTypes { get; set; }
-        
-        public virtual ICollection<CarCity>CarCities { get; set; }
-        
+        public List<int> FuelTypesId { get; set; }
+        public Dictionary<int,string> FuelTypes { get; set; }
+        public List<int> CitiesId { get; set; }
+        public List<CityViewModel> Cities { get; set; }
         public int BrandId { get; set; }
-        public virtual Brand Brand { get; set; }
-        
+        // public Dictionary<int,string> Brands { get; set; } альтернатива нижней строке
+        public List<BrandViewModel> Brands { get; set; }
         public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }
-        
+        public List<CategoryViewModel> Categories { get; set; }
         public int BodyTypeId { get; set; }
-        public virtual BodyType BodyType { get; set; }
-        
-        
+        public Dictionary<int,string> BodyTypes { get; set; }
     }
 }

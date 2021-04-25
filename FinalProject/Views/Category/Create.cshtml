@@ -1,0 +1,13 @@
+﻿@model CreateCategoryViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div asp-validation-summary="All">
+</div>
+<form action="Create" method="post">
+    <input type="text" asp-for="Name">
+    <input type="submit" value="Создать">
+</form>

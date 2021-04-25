@@ -1,0 +1,15 @@
+﻿@model List<BrandViewModel>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@Html.ActionLink("Создать", "Create","Brand")
+<h5>Название</h5>
+@foreach (var brand in Model)
+{
+    <p>@brand.Name</p>
+    @Html.ActionLink("Изменить","Edit","Brand", new{id=brand.Id})
+    @Html.ActionLink("Удалить","Delete","Brand", new{id=brand.Id})
+}

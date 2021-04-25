@@ -9,5 +9,8 @@ namespace FinalProject.Context.Models
     public class ApplicationUser:IdentityUser
     {
         public DateTime DateOfBirth { get; set; }
+        
+        public virtual ICollection<Order>Orders { get; set; }
+        
     }
 }

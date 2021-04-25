@@ -1,0 +1,15 @@
+﻿@model System.Collections.Generic.List<FinalProject.ViewModels.CityViewModel>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@Html.ActionLink("Создать", "Create","City")
+<h5>Название</h5>
+@foreach (var brand in Model)
+{
+    <p>@brand.Name</p>
+    @Html.ActionLink("Изменить","Edit","City", new{id=brand.Id})
+    @Html.ActionLink("Удалить","Delete","City", new{id=brand.Id})
+}

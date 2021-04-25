@@ -1,0 +1,15 @@
+﻿@model System.Collections.Generic.List<FinalProject.ViewModels.CategoryViewModel>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@Html.ActionLink("Создать", "Create","Category")
+<h5>Название</h5>
+@foreach (var brand in Model)
+{
+    <p>@brand.Name</p>
+    @Html.ActionLink("Изменить","Edit","Category", new{id=brand.Id})
+    @Html.ActionLink("Удалить","Delete","Category", new{id=brand.Id})
+}
