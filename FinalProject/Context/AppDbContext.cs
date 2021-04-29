@@ -51,6 +51,27 @@ namespace FinalProject.Context
                 new FuelType{Id=3, Name="Дизель "}
             });
             
+            builder.Entity<Brand>().HasData(new List<Brand>
+            {
+                new Brand{Id=1, Name="BMW"},
+                new Brand{Id=2, Name="Mercedes-Benz"},
+                new Brand{Id=3, Name="Toyota"}
+            });
+            
+            builder.Entity<Category>().HasData(new List<Category>
+            {
+                new Category(){Id=1, Name="Стандарт"},
+                new Category(){Id=2, Name="Комфорт"},
+                new Category(){Id=3, Name="Люкс"}
+            });
+            
+            builder.Entity<City>().HasData(new List<City>
+            {
+                new City(){Id=1, Name="Душанбе"},
+                new City(){Id=2, Name="Худжанд"},
+                new City(){Id=3, Name="Памир"}
+            });
+            
             
         }
     }

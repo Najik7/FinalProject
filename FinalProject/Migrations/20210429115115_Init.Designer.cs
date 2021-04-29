@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210426171233_AddOtherTables")]
-    partial class AddOtherTables
+    [Migration("20210429115115_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,37 +107,37 @@ namespace FinalProject.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "sad"
+                            Name = "Седан"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "sad"
+                            Name = "Универсал"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "dfad"
+                            Name = "Хэтчбек"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "sadf"
+                            Name = "Минивен"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "sadf"
+                            Name = "Кроссовер"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "sdaf"
+                            Name = "Кабриолет"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "sadf"
+                            Name = "Внедорожник"
                         });
                 });
 
@@ -154,6 +154,23 @@ namespace FinalProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Brands");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "BMW"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Mercedes-Benz"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Toyota"
+                        });
                 });
 
             modelBuilder.Entity("FinalProject.Context.Models.Car", b =>
@@ -268,6 +285,23 @@ namespace FinalProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Стандарт"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Комфорт"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Люкс"
+                        });
                 });
 
             modelBuilder.Entity("FinalProject.Context.Models.City", b =>
@@ -283,6 +317,23 @@ namespace FinalProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Душанбе"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Худжанд"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Памир"
+                        });
                 });
 
             modelBuilder.Entity("FinalProject.Context.Models.FuelType", b =>
@@ -303,17 +354,17 @@ namespace FinalProject.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "sda"
+                            Name = "Бензин"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "sadf"
+                            Name = "Газ"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "sdf"
+                            Name = "Дизель "
                         });
                 });
 
