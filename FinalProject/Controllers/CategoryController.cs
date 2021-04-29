@@ -20,7 +20,7 @@ namespace FinalProject.Controllers
         
         public async Task<IActionResult> GetAll()
         {
-            var brands = await _context.Brands.Select(x => new CategoryViewModel(){Id = x.Id,Name = x.Name}).ToListAsync();
+            var brands = await _context.Categories.Select(x => new CategoryViewModel(){Id = x.Id,Name = x.Name}).ToListAsync();
             
             return View(brands);
         }

@@ -35,20 +35,20 @@ namespace FinalProject.Context
 
             builder.Entity<BodyType>().HasData(new List<BodyType>
             {
-                new BodyType {Id = 1, Name = ""},
-                new BodyType {Id = 2, Name = ""},
-                new BodyType {Id = 3, Name = ""},
-                new BodyType {Id = 4, Name = ""},
-                new BodyType {Id = 5, Name = ""},
-                new BodyType {Id = 6, Name = ""},
-                new BodyType {Id = 7, Name = ""}
+                new BodyType {Id = 1, Name = "Седан"},
+                new BodyType {Id = 2, Name = "Универсал"},
+                new BodyType {Id = 3, Name = "Хэтчбек"},
+                new BodyType {Id = 4, Name = "Минивен"},
+                new BodyType {Id = 5, Name = "Кроссовер"},
+                new BodyType {Id = 6, Name = "Кабриолет"},
+                new BodyType {Id = 7, Name = "Внедорожник"}
             });
 
             builder.Entity<FuelType>().HasData(new List<FuelType>
             {
-                new FuelType{Id=1, Name=""},
-                new FuelType{Id=2, Name=""},
-                new FuelType{Id=3, Name=""}
+                new FuelType{Id=1, Name="Бензин"},
+                new FuelType{Id=2, Name="Газ"},
+                new FuelType{Id=3, Name="Дизель "}
             });
             
             

@@ -16,11 +16,11 @@ namespace FinalProject.Controllers
         {
             _context = context;
         }
-
+        
         
         public async Task<IActionResult> GetAll()
         {
-            var cities = await _context.Brands.Select(x => new CityViewModel(){Id = x.Id,Name = x.Name}).ToListAsync();
+            var cities = await _context.Cities.Select(x => new CityViewModel(){Id = x.Id,Name = x.Name}).ToListAsync();
             
             return View(cities);
         }

@@ -1,0 +1,38 @@
+﻿@model List<FinalProject.ViewModels.CarViewModel>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@foreach (var car in Model)
+{
+    <div>
+        <h1>@car.Model</h1>
+        <p>@car.Doors</p>
+        <p>@car.Passengers</p>
+        <p>@car.BaggageCount</p>
+        <p>@car.BrandName</p>
+        <br>
+        <label for="canD">Можно депортировать</label>
+        <input id="canD" type="checkbox" checked="@(car.CanDeparture)">
+        <br>
+        <hr>
+        <p>города</p>
+        @foreach (var city in car.Cities)
+        {
+            <p>@city</p>
+        }
+        <hr>
+        <hr>
+                <p>тип топлива</p>
+                @foreach (var fuelType in car.FuelTypes)
+                {
+                    <p>@fuelType</p>
+                }
+        <hr>
+        
+        <img src="@car.ImagePath" alt="">
+        @Html.ActionLink("Удалить","Delete","Car", new {id = car.Id})
+    </div>
+}

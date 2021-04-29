@@ -1,7 +1,10 @@
-﻿namespace FinalProject.ViewModels
+﻿using System.Collections.Generic;
+
+namespace FinalProject.ViewModels
 {
     public class CarViewModel
     {
+        public int Id { get; set; }
         public string Model { get; set; }
         public int Doors { get; set; }
         public int Passengers { get; set; }
@@ -16,6 +19,8 @@
         public int FromAge { get; set; }
         public int TilAge { get; set; }
         public string ImagePath { get; set; }
+        public List<string> FuelTypes { get; set; }
+        public List<string> Cities { get; set; }
         
         public string BrandName { get; set; }
         public string CategoryName { get; set; }

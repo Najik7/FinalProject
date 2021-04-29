@@ -80,7 +80,7 @@ namespace FinalProject.Controllers
                 BrandId = model.BrandId,
                 CategoryId = model.CategoryId,
                 Doors = model.Doors,
-                Model = model.Model,
+                Model = model.ModelName,
                 Passengers = model.Passengers,
                 BaggageCount = model.BaggageCount,
                 CanDeparture = model.CanDeparture,
@@ -103,7 +103,7 @@ namespace FinalProject.Controllers
             {
                 await _context.CarFuelTypes.AddAsync(new CarFuelType {CarId = car.Id, FuelTypeId = i});
             }
-
+            
             foreach (var i in model.CitiesId)
             {
                 await _context.CarCities.AddAsync(new CarCity {CarId = car.Id, CityId = i});
@@ -111,40 +111,58 @@ namespace FinalProject.Controllers
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Create");
+            return RedirectToAction("GetAll");
         }
 
         
         
         public async Task<IActionResult> GetAll()
         {
-            var cars = await (from p in _context.Cars
-                join c in _context.Categories on p.CategoryId equals c.Id
-                join b in _context.Brands on p.BrandId equals b.Id
-                join t in _context.BodyTypes on p.BodyTypeId equals t.Id
-                select new CarViewModel()
+            var cars = await _context.Cars
+                .Include(x => x.Brand)
+                .Include(x => x.Category)
+                .Include(x => x.BodyType)
+                .Include(x => x.CarCities).ThenInclude(x => x.City)
+                .Include(x => x.CarFuelTypes).ThenInclude(x => x.FuelType)
+                .Select(x => new CarViewModel()
                 {
-                    Model = p.Model,
-                    Doors = p.Doors,
-                    Passengers = p.Passengers,
-                    BaggageCount = p.BaggageCount,
-                    EngineVolume = p.EngineVolume,
-                    HasConditioning = p.HasConditioning,
-                    IsManual = p.IsManual,
-                    CanDeparture = p.CanDeparture,
-                    RequiredMileage = p.RequiredMileage,
-                    DailyPrice = p.DailyPrice,
-                    IsFree = p.IsFree,
-                    FromAge = p.FromAge,
-                    TilAge = p.TilAge,
-                    ImagePath = p.ImagePath,
-                    
-                    CategoryName = c.Name,
-                    BrandName = b.Name,
-                    BodyTypeName = t.Name
-                    
-                    
+                    Id = x.Id,
+                    Doors = x.Doors,
+                    Model = x.Model,
+                    Passengers = x.Passengers,
+                    BaggageCount = x.BaggageCount,
+                    BrandName = x.Brand.Name,
+                    CanDeparture = x.CanDeparture,
+                    CategoryName = x.Category.Name,
+                    DailyPrice = x.DailyPrice,
+                    EngineVolume = x.EngineVolume,
+                    FromAge = x.FromAge,
+                    HasConditioning = x.HasConditioning,
+                    ImagePath = x.ImagePath,
+                    IsFree = x.IsFree,
+                    IsManual = x.IsManual,
+                    RequiredMileage = x.RequiredMileage,
+                    TilAge = x.TilAge,
+                    BodyTypeName = x.BodyType.Name,
+                    Cities = x.CarCities.Select(c=>c.City.Name).ToList(),
+                    FuelTypes = x.CarFuelTypes.Select(f=>f.FuelType.Name).ToList()
                 }).ToListAsync();
+            return View(cars);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var car = await _context.Cars.FindAsync(id);
+
+            var carFuelTypes = await _context.CarFuelTypes.Where(x => x.CarId == id).ToListAsync();
+
+            var carCities = await _context.CarCities.Where(x => x.CarId == id).ToListAsync();
+            
+            _context.CarFuelTypes.RemoveRange(carFuelTypes);
+            _context.CarCities.RemoveRange(carCities);
+            _context.Cars.Remove(car);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("GetAll");
         }
     }
 }

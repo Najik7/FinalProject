@@ -5,7 +5,7 @@ namespace FinalProject.ViewModels
 {
     public class CreateCarViewModel
     {
-        public string Model { get; set; }
+        public string ModelName { get; set; }
         public int Doors { get; set; }
         public int Passengers { get; set; }
         public int BaggageCount { get; set; }

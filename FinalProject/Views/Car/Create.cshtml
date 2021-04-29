@@ -4,5 +4,90 @@
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
-
-<h2>title</h2>
+<form action="Create" method="post" enctype="multipart/form-data">
+    <div>
+        <input type="text" asp-for="ModelName" placeholder="Model"/>
+    </div>
+    <div>
+        <input type="number" asp-for="Doors" placeholder="Doors"/>
+    </div>
+    <div>
+        <input type="number" asp-for="Passengers" placeholder="Passengers"/>
+    </div>
+    <div>
+        <input type="file" asp-for="Image">
+    </div>
+    <div>
+        <input type="number" asp-for="EngineVolume" placeholder="EngineVolume"/>
+    </div>
+    <div>
+        <input type="number" asp-for="BaggageCount" placeholder="BaggageCount"/>
+    </div>
+    <div>
+        <input type="checkbox" asp-for="CanDeparture"/>
+    </div>
+    <div>
+        <input type="checkbox" asp-for="RequiredMileage"/>
+    </div>
+    <div>
+        <input type="checkbox" asp-for="IsFree">
+    </div>
+    <div>
+        <input type="checkbox" asp-for="IsManual">
+    </div>
+    <div>
+        <input type="number" asp-for="DailyPrice" placeholder="DailyPrice">
+    </div>
+    <div>
+        <input type="number" asp-for="FromAge" placeholder="FromAge">
+    </div>
+    <div>
+        <input type="number" asp-for="TilAge" placeholder="TilAge">
+    </div>
+    <div>
+        <input type="checkbox" asp-for="HasConditioning">
+    </div>
+    <div>
+        <select asp-for="BrandId">
+                @foreach (var brand in Model.Brands)
+                {
+                    <option value="@brand.Id">@brand.Name</option>
+                }
+            </select>
+    </div>
+    <div>
+        <select asp-for="BodyTypeId">
+                @foreach (var bodyType in Model.BodyTypes)
+                {
+                    <option value="@bodyType.Key">@bodyType.Value</option>
+                }
+            </select>
+    </div>
+    <div>
+        <select asp-for="CategoryId">
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+    </div>
+    <div>
+        <select multiple asp-for="FuelTypesId">
+                @foreach (var fuelTypes in Model.FuelTypes)
+                {
+                    <option value="@fuelTypes.Key">@fuelTypes.Value</option>
+                }
+            </select>
+    </div>
+    <div>
+        <select multiple asp-for="CitiesId">
+                @foreach (var city in Model.Cities)
+                {
+                    <option value="@city.Id">@city.Name</option>
+                }
+            </select>
+    </div>
+    <div>
+        <input type="submit" value="Создать"/>
+    </div>
+</form>
