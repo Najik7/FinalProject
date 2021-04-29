@@ -164,5 +164,114 @@ namespace FinalProject.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("GetAll");
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var car = await _context.Cars.FindAsync(id);
+
+
+            var model = new EditCarViewModel()
+            {
+                BrandId = car.BrandId,
+                CategoryId = car.CategoryId,
+                Doors = car.Doors,
+                ModelName = car.Model,
+                Passengers = car.Passengers,
+                BaggageCount = car.BaggageCount,
+                CanDeparture = car.CanDeparture,
+                DailyPrice = car.DailyPrice,
+                FromAge = car.FromAge,
+                EngineVolume = car.EngineVolume,
+                HasConditioning = car.HasConditioning,
+                IsFree = car.IsFree,
+                IsManual = car.IsManual,
+                TilAge = car.TilAge,
+                RequiredMileage = car.RequiredMileage,
+                BodyTypeId = car.BodyTypeId,
+                Brands = await _context.Brands.Select(x => new BrandViewModel {Id = x.Id, Name = x.Name}).ToListAsync(),
+                FuelTypes = await _context.FuelTypes.ToDictionaryAsync(x => x.Id, x => x.Name),
+                Categories = await _context.Categories.Select(x => new CategoryViewModel {Id = x.Id, Name = x.Name})
+                    .ToListAsync(),
+                Cities = await _context.Cities.Select(x => new CityViewModel {Id = x.Id, Name = x.Name}).ToListAsync(),
+                BodyTypes = await _context.BodyTypes.ToDictionaryAsync(x=>x.Id, x=>x.Name),
+                CitiesId = await _context.CarCities.Where(x=>x.CarId == car.Id).Select(x=>x.CityId).ToListAsync(),
+                FuelTypesId = await _context.CarFuelTypes.Where(x=>x.CarId == car.Id).Select(x=>x.FuelTypeId).ToListAsync(),
+                Id = id
+            };
+            return View(model);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditCarViewModel model)
+        {
+            var car = await _context.Cars.FindAsync(model.Id);
+
+            car.BrandId = model.BrandId;
+            car.CategoryId = model.CategoryId;
+            car.Doors = model.Doors;
+            car.Model = model.ModelName;
+            car.Passengers = model.Passengers;
+            car.BaggageCount = model.BaggageCount;
+            car.CanDeparture = model.CanDeparture;
+            car.DailyPrice = model.DailyPrice;
+            car.FromAge = model.FromAge;
+            car.EngineVolume = model.EngineVolume;
+            car.HasConditioning = model.HasConditioning;
+            car.IsFree = model.IsFree;
+            car.IsManual = model.IsManual;
+            car.TilAge = model.TilAge;
+            car.RequiredMileage = model.RequiredMileage;
+            car.BodyTypeId = model.BodyTypeId;
+            car.ImagePath = model.Image != null ? $"/images/{model.Image.FileName}" : car.ImagePath;
+
+            #region adding file
+            if (model.Image != null)
+            {
+                string dirPath = _environment.WebRootPath + "/images";
+               
+                if (!Directory.Exists(dirPath))
+                {
+                    Directory.CreateDirectory(dirPath);
+                }
+                
+                if (System.IO.File.Exists(dirPath+$"/{model.Image.FileName}"))
+                {
+                    System.IO.File.Delete(dirPath+$"/{model.Image.FileName}");
+                }
+
+                string imagePath = dirPath + $"/{model.Image.FileName}";
+
+                if (!System.IO.File.Exists(imagePath))
+                {
+                    using (FileStream fs = new FileStream(imagePath, FileMode.Create))
+                    {
+                        await model.Image.CopyToAsync(fs);
+                    }
+                }
+            }
+            #endregion
+
+            var carCities = await _context.CarCities.Where(x => x.CarId == car.Id).ToListAsync();
+            var carFuelTypes = await _context.CarFuelTypes.Where(x => x.CarId == car.Id).ToListAsync();
+
+            _context.CarCities.RemoveRange(carCities);
+            _context.CarFuelTypes.RemoveRange(carFuelTypes);
+
+            foreach (var i in model.CitiesId)
+            {
+                await _context.CarCities.AddAsync(new CarCity {CarId = car.Id, CityId = i});
+            }
+            
+            foreach (var i in model.FuelTypesId)
+            {
+                await _context.CarFuelTypes.AddAsync(new CarFuelType {CarId = car.Id, FuelTypeId = i});
+            }
+
+            await _context.SaveChangesAsync();
+            
+            return RedirectToAction("GetAll");
+        }
+        
+        
     }
 }

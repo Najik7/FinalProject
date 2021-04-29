@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace FinalProject.ViewModels
 {
-    public class CreateCarViewModel
+    public class EditCarViewModel 
     {
+        public int Id { get; set; }
         public string ModelName { get; set; }
         public int Doors { get; set; }
         public int Passengers { get; set; }
