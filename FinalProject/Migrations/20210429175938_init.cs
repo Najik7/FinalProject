@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FinalProject.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -322,10 +322,11 @@ namespace FinalProject.Migrations
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TilDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HasGPS = table.Column<bool>(type: "bit", nullable: false),
                     HasAdditionalDriver = table.Column<bool>(type: "bit", nullable: false),
                     HasKidChair = table.Column<bool>(type: "bit", nullable: false),
                     HasInsurance = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Summ = table.Column<double>(type: "float", nullable: false),
                     CarId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)

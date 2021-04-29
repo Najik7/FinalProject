@@ -1,0 +1,36 @@
+﻿@model CreateOrderViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<form action="Create" method="post">
+    <div>
+        <input type="date" asp-for="FromDate"/>
+    </div>
+    <div>
+        <input type="date" asp-for="TilDate"/>
+    </div>
+    <div>
+        <input type="hidden" asp-for="CarId"/>
+    </div>
+    <div>
+        <label asp-for="HasAdditionalDriver"></label>
+        <input type="checkbox" asp-for="HasAdditionalDriver"/>
+        <p>+150</p>
+    </div>
+    <div>
+        <label asp-for="HasKidChair"></label>
+        <input type="checkbox" asp-for="HasKidChair"/>
+        <p>+50</p>
+    </div>
+    <div>
+        <label asp-for="HasInsurance"></label>
+        <input type="checkbox" asp-for="HasInsurance">
+        <p>+500</p>
+    </div>
+    <div>
+        <input type="submit" value="Создать"/>
+    </div>
+</form>

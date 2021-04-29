@@ -385,9 +385,6 @@ namespace FinalProject.Migrations
                     b.Property<bool>("HasAdditionalDriver")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("HasGPS")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("HasInsurance")
                         .HasColumnType("bit");
 
@@ -396,6 +393,12 @@ namespace FinalProject.Migrations
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Summ")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("TilDate")
                         .HasColumnType("datetime2");
