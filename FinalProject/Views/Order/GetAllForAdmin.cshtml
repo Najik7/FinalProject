@@ -16,10 +16,12 @@
             <img width="200" src="@order.ImagePath" alt="">
             <p>doors: @order.Doors</p>
             <p>Passengers: @order.Passengers</p>
-            <p>Status: @order.Status</p>
+            <p>Статус Брони: <span class="text-@(order.Status == "В ожидании" ? "dark" : order.Status == "Одобрено" ? "success": "danger")"> @order.Status</span></p>
             <a href="~/Order/Cancel?orderId=@order.Id">Отменить</a>
             <a href="~/Order/Approved?orderId=@order.Id">Одобрить</a>
-            <p>Status: @order.Status</p>
+            <p>ФИО: @order.FIO</p>
+            <p>Возраст: @order.Age</p>
+            <p>Телефон: @order.PhoneNumber</p>
             <p>BaggageCount: @order.BaggageCount</p>
             <p>BrandName: @order.BrandName</p>
             <p>CategoryName: @order.CategoryName</p>
@@ -32,32 +34,33 @@
             <p>BodyTypeName: @order.BodyTypeName</p>
             <div>
                 <label>IsManual</label>
-                <input type="checkbox" @(order.IsManual ? "checked" : null)>
+                <input disabled type="checkbox" @(order.IsManual ? "checked" : null)>
             </div>
             <div>
                 <label>HasConditioning</label>
-                <input type="checkbox" @(order.HasConditioning ? "checked" : null)>
+                <input disabled type="checkbox" @(order.HasConditioning ? "checked" : null)>
             </div>
             <div>
                 <label>HasInsurance</label>
-                <input type="checkbox" @(order.HasInsurance ? "checked" : null)>
+                <input disabled type="checkbox" @(order.HasInsurance ? "checked" : null)>
             </div>
             <div>
                 <label>HasAdditionalDriver</label>
-                <input type="checkbox" @(order.HasAdditionalDriver ? "checked" : null)>
+                <input disabled type="checkbox" @(order.HasAdditionalDriver ? "checked" : null)>
             </div>
             <div>
                 <label>HasKidChair</label>
-                <input type="checkbox" @(order.HasKidChair ? "checked" : null)>
+                <input disabled type="checkbox" @(order.HasKidChair ? "checked" : null)>
             </div>
             <div>
                 <label>RequiredMileage</label>
-                <input type="checkbox" @(order.RequiredMileage ? "checked" : null)>
+                <input disabled type="checkbox" @(order.RequiredMileage ? "checked" : null)>
             </div>
             <div>
                 <label>CanDeparture</label>
-                <input type="checkbox" @(order.CanDeparture ? "checked" : null)>
+                <input disabled type="checkbox" @(order.CanDeparture ? "checked" : null)>
             </div>
+            
             <div>
                 <p>
                     fuel types

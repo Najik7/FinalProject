@@ -22,7 +22,7 @@ namespace FinalProject.Controllers
             _userManager = userManager;
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         public IActionResult Create(int carId)
         {
             var model = new CreateOrderViewModel
@@ -34,7 +34,7 @@ namespace FinalProject.Controllers
             return View(model);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateOrderViewModel model)
         {
@@ -75,7 +75,7 @@ namespace FinalProject.Controllers
             return RedirectToAction("GetAll");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Cancel(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
@@ -85,7 +85,7 @@ namespace FinalProject.Controllers
             return RedirectToAction("GetAllForAdmin");
         }
         
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Approved(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
@@ -95,7 +95,7 @@ namespace FinalProject.Controllers
             return RedirectToAction("GetAllForAdmin");
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetAll()
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -104,8 +104,12 @@ namespace FinalProject.Controllers
                 .Include(x => x.Car).ThenInclude(x => x.CarCities)
                 .Include(x => x.Car).ThenInclude(x => x.CarFuelTypes)
                 .Include(x => x.Car).ThenInclude(x => x.BodyType)
+                .Include(x=>x.User)
                 .Select(x => new OrderViewModel
                 {
+                    Age = (int)((DateTime.Now - x.User.DateOfBirth).TotalDays / 365),
+                    FIO = x.User.FirstName + " " + x.User.LastName,
+                    PhoneNumber = x.User.PhoneNumber,
                     Cities = x.Car.CarCities.Select(c => c.City.Name).ToList(),
                     Doors = x.Car.Doors,
                     FuelTypes = x.Car.CarFuelTypes.Select(f => f.FuelType.Name).ToList(),
@@ -144,8 +148,12 @@ namespace FinalProject.Controllers
                 .Include(x => x.Car).ThenInclude(x => x.CarCities)
                 .Include(x => x.Car).ThenInclude(x => x.CarFuelTypes)
                 .Include(x => x.Car).ThenInclude(x => x.BodyType)
+                .Include(x=>x.User)
                 .Select(x => new OrderViewModel
                 {
+                    Age = (int)((DateTime.Now - x.User.DateOfBirth).TotalDays / 365),
+                    FIO = x.User.FirstName + " " + x.User.LastName,
+                    PhoneNumber = x.User.PhoneNumber,
                     Cities = x.Car.CarCities.Select(c => c.City.Name).ToList(),
                     Doors = x.Car.Doors,
                     FuelTypes = x.Car.CarFuelTypes.Select(f => f.FuelType.Name).ToList(),

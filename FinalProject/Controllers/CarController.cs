@@ -1,9 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FinalProject.Context;
 using FinalProject.Context.Models;
 using FinalProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +39,7 @@ namespace FinalProject.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateCarViewModel model)
         {
@@ -115,44 +118,55 @@ namespace FinalProject.Controllers
         }
 
         
-        
+        [Authorize]
         public async Task<IActionResult> GetAll(int cityId, int fuelTypeId,int categoryId)
         {
-            var cars = await _context.Cars
-                .Include(x => x.CarCities).ThenInclude(x => x.City)
-                .Include(x => x.CarFuelTypes).ThenInclude(x => x.FuelType)
-                .Where(x=> (cityId == 0 || x.CarCities.Select(c=>c.CityId).Contains(cityId)) 
-                           && (fuelTypeId == 0 || x.CarFuelTypes.Select(f=>f.FuelTypeId).Contains(fuelTypeId)) 
-                           && (categoryId == 0 || x.CategoryId == categoryId))
-                .Include(x => x.Brand)
-                .Include(x => x.Category)
-                .Include(x => x.BodyType)
-                .Select(x => new CarViewModel()
-                {
-                    Id = x.Id,
-                    Doors = x.Doors,
-                    Model = x.Model,
-                    Passengers = x.Passengers,
-                    BaggageCount = x.BaggageCount,
-                    BrandName = x.Brand.Name,
-                    CanDeparture = x.CanDeparture,
-                    CategoryName = x.Category.Name,
-                    DailyPrice = x.DailyPrice,
-                    EngineVolume = x.EngineVolume,
-                    FromAge = x.FromAge,
-                    HasConditioning = x.HasConditioning,
-                    ImagePath = x.ImagePath,
-                    IsFree = x.IsFree,
-                    IsManual = x.IsManual,
-                    RequiredMileage = x.RequiredMileage,
-                    TilAge = x.TilAge,
-                    BodyTypeName = x.BodyType.Name,
-                    Cities = x.CarCities.Select(c=>c.City.Name).ToList(),
-                    FuelTypes = x.CarFuelTypes.Select(f=>f.FuelType.Name).ToList()
-                }).ToListAsync();
-            return View(cars);
+            var carsViewModel = new GetAllCarsViewModel
+            {
+                Cars = await _context.Cars
+                    .Include(x => x.CarCities).ThenInclude(x => x.City)
+                    .Include(x => x.CarFuelTypes).ThenInclude(x => x.FuelType)
+                    .Where(x => (cityId == 0 || x.CarCities.Select(c => c.CityId).Contains(cityId))
+                                && (fuelTypeId == 0 || x.CarFuelTypes.Select(f => f.FuelTypeId).Contains(fuelTypeId))
+                                && (categoryId == 0 || x.CategoryId == categoryId))
+                    .Include(x => x.Brand)
+                    .Include(x => x.Category)
+                    .Include(x => x.BodyType)
+                    .Select(x => new CarViewModel()
+                    {
+                        Id = x.Id,
+                        Doors = x.Doors,
+                        Model = x.Model,
+                        Passengers = x.Passengers,
+                        BaggageCount = x.BaggageCount,
+                        BrandName = x.Brand.Name,
+                        CanDeparture = x.CanDeparture,
+                        CategoryName = x.Category.Name,
+                        DailyPrice = x.DailyPrice,
+                        EngineVolume = x.EngineVolume,
+                        FromAge = x.FromAge,
+                        HasConditioning = x.HasConditioning,
+                        ImagePath = x.ImagePath,
+                        IsFree = x.IsFree,
+                        IsManual = x.IsManual,
+                        RequiredMileage = x.RequiredMileage,
+                        TilAge = x.TilAge,
+                        BodyTypeName = x.BodyType.Name,
+                        Cities = x.CarCities.Select(c => c.City.Name).ToList(),
+                        FuelTypes = x.CarFuelTypes.Select(f => f.FuelType.Name).ToList()
+                    }).ToListAsync(),
+                Cities = await _context.Cities.Select(x => new CityViewModel {Id = x.Id, Name = x.Name}).ToListAsync(),
+                FuelTypes = await _context.FuelTypes.ToDictionaryAsync(x => x.Id, x => x.Name),
+                Categories = await _context.Categories.Select(x => new CategoryViewModel {Id = x.Id, Name = x.Name})
+                    .ToListAsync()
+            };
+            
+            return View(carsViewModel);
         }
+        
+        
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var car = await _context.Cars.FindAsync(id);
@@ -168,6 +182,8 @@ namespace FinalProject.Controllers
             return RedirectToAction("GetAll");
         }
 
+        
+        
         public async Task<IActionResult> Edit(int id)
         {
             var car = await _context.Cars.FindAsync(id);
@@ -204,6 +220,8 @@ namespace FinalProject.Controllers
             return View(model);
         }
         
+        
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditCarViewModel model)
         {

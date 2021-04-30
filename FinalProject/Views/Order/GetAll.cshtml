@@ -4,8 +4,8 @@
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
-<div class="row">
-    
+
+    <div class="row">
 @foreach (var order in Model)
 {
     <div class="card col-4">
@@ -14,50 +14,57 @@
         </div>
         <div class="card-body">
             <img width="200" src="@order.ImagePath" alt="">
-            <p>doors: @order.Doors</p>
-            <p>Passengers: @order.Passengers</p>
-            <p>Status: @order.Status</p>
-            <p>BaggageCount: @order.BaggageCount</p>
-            <p>BrandName: @order.BrandName</p>
-            <p>CategoryName: @order.CategoryName</p>
-            <p>EngineVolume: @order.EngineVolume</p>
-            <p>FromAge: @order.FromAge</p>
-            <p>TilAge: @order.TilAge</p>
-            <p>FromDate: @order.FromDate</p>
-            <p>OrderDate: @order.OrderDate</p>
-            <p>TilDate: @order.TilDate</p>
-            <p>BodyTypeName: @order.BodyTypeName</p>
+            <p>Условия Бронирования:</p>
+            <p>Статус Брони: <span class="text-@(order.Status == "В ожидании" ? "dark" : order.Status == "Одобрено" ? "success": "danger")"> @order.Status</span></p>
+            <p>ФИО: @order.FIO</p>
+            <p>Возраст: @order.Age</p>
+            <p>Телефон: @order.PhoneNumber</p>
+            <p>Двери: @order.Doors</p>
+            <p>Мест: @order.Passengers</p>
+            <p>Багаж: @order.BaggageCount</p>
+            <p>Модель: @order.BrandName @order.Model</p>
+            <p>Класс: @order.CategoryName</p>
+            <p>Тип кузова: @order.BodyTypeName</p>
+            <p>Объем двигателя: @order.EngineVolume</p>
+            <p></p>
+            <p>Возрастные ограничения:</p>
+            <p>Возраст от: @order.FromAge</p>
+            <p>Возраст до: @order.TilAge</p>
+            <p>Дата бронирования: @order.FromDate</p>
+            <p>С: @order.OrderDate</p>
+            <p>До: @order.TilDate</p>
+            
             <div>
-                <label>IsManual</label>
-                <input type="checkbox" @(order.IsManual ? "checked" : null)>
+                <label>Механическая корбка передач::</label>
+                <input disabled type="checkbox" @(order.IsManual ? "checked" : null)>
             </div>
             <div>
-                <label>HasConditioning</label>
-                <input type="checkbox" @(order.HasConditioning ? "checked" : null)>
+                <label>Кодиционер</label>
+                <input disabled type="checkbox" @(order.HasConditioning ? "checked" : null)>
             </div>
             <div>
-                <label>HasInsurance</label>
-                <input type="checkbox" @(order.HasInsurance ? "checked" : null)>
+                <label>Страховка</label>
+                <input disabled type="checkbox" @(order.HasInsurance ? "checked" : null)>
             </div>
             <div>
-                <label>HasAdditionalDriver</label>
-                <input type="checkbox" @(order.HasAdditionalDriver ? "checked" : null)>
+                <label>Дополнительный водитель:</label>
+                <input disabled type="checkbox" @(order.HasAdditionalDriver ? "checked" : null)>
             </div>
             <div>
-                <label>HasKidChair</label>
-                <input type="checkbox" @(order.HasKidChair ? "checked" : null)>
+                <label>Детское кресло</label>
+                <input disabled type="checkbox" @(order.HasKidChair ? "checked" : null)>
             </div>
             <div>
-                <label>RequiredMileage</label>
-                <input type="checkbox" @(order.RequiredMileage ? "checked" : null)>
+                <label>Ограниченно км:</label>
+                <input disabled type="checkbox" @(order.RequiredMileage ? "checked" : null)>
             </div>
             <div>
-                <label>CanDeparture</label>
-                <input type="checkbox" @(order.CanDeparture ? "checked" : null)>
+                <label>Выезд за город:</label>
+                <input disabled type="checkbox" @(order.CanDeparture ? "checked" : null)>
             </div>
             <div>
                 <p>
-                    fuel types
+                    Вид топлива:
                 </p>
                 @foreach (var fuelType in order.FuelTypes)
                 {
@@ -66,7 +73,7 @@
             </div>
             <div>
                 <p>
-                    cities
+                    Город:
                 </p>
                 @foreach (var city in order.Cities)
                 {

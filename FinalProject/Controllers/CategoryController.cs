@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FinalProject.Context;
 using FinalProject.Context.Models;
 using FinalProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ namespace FinalProject.Controllers
         }
 
         
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var brands = await _context.Categories.Select(x => new CategoryViewModel(){Id = x.Id,Name = x.Name}).ToListAsync();
@@ -31,6 +33,7 @@ namespace FinalProject.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryViewModel model)
         {
@@ -59,6 +62,7 @@ namespace FinalProject.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditCategoryViewModel model)
         {
@@ -80,6 +84,7 @@ namespace FinalProject.Controllers
             return RedirectToAction("GetAll");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var category = await _context.Categories.FindAsync(id);

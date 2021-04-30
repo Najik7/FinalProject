@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FinalProject.Context;
 using FinalProject.Context.Models;
 using FinalProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ namespace FinalProject.Controllers
         }
         
         
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var cities = await _context.Cities.Select(x => new CityViewModel(){Id = x.Id,Name = x.Name}).ToListAsync();
@@ -31,6 +33,7 @@ namespace FinalProject.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateCityViewModel model)
         {
@@ -59,6 +62,7 @@ namespace FinalProject.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditCityViewModel model)
         {
@@ -80,11 +84,11 @@ namespace FinalProject.Controllers
             return RedirectToAction("GetAll");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var city = await _context.Cities.FindAsync(id);
-
-            //_context.Entry(brand).State = EntityState.Deleted;
+            
             _context.Cities.Remove(city);
 
             await _context.SaveChangesAsync();

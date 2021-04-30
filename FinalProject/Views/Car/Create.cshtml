@@ -6,22 +6,22 @@
 }
 <form action="Create" method="post" enctype="multipart/form-data">
     <div>
-        <input type="text" asp-for="ModelName" placeholder="Model"/>
+        <input type="text" asp-for="ModelName" placeholder="Модель"/>
     </div>
     <div>
-        <input type="number" asp-for="Doors" placeholder="Doors"/>
+        <input type="number" asp-for="Doors" placeholder="Двери"/>
     </div>
     <div>
-        <input type="number" asp-for="Passengers" placeholder="Passengers"/>
+        <input type="number" asp-for="Passengers" placeholder="Мест"/>
     </div>
     <div>
         <input type="file" asp-for="Image">
     </div>
     <div>
-        <input type="number" asp-for="EngineVolume" placeholder="EngineVolume"/>
+        <input type="text" asp-for="EngineVolume" placeholder="Объем двигателя"/>
     </div>
     <div>
-        <input type="number" asp-for="BaggageCount" placeholder="BaggageCount"/>
+        <input type="number" asp-for="BaggageCount" placeholder="Количество багажа"/>
     </div>
     <div>
         <label asp-for="CanDeparture"></label>
@@ -40,13 +40,13 @@
         <input type="checkbox" asp-for="IsManual">
     </div>
     <div>
-        <input type="number" asp-for="DailyPrice" placeholder="DailyPrice">
+        <input type="number" asp-for="DailyPrice" placeholder="Цена за день">
     </div>
     <div>
-        <input type="number" asp-for="FromAge" placeholder="FromAge">
+        <input type="number" asp-for="FromAge" placeholder="Возраст от">
     </div>
     <div>
-        <input type="number" asp-for="TilAge" placeholder="TilAge">
+        <input type="number" asp-for="TilAge" placeholder="Возраст до">
     </div>
     <div>
         <label asp-for="HasConditioning"></label>

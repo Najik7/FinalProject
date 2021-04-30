@@ -25,15 +25,16 @@ namespace FinalProject.Controllers
             _context = context;
         }
 
+        
         public async Task<IActionResult> Index()
         {
             var model = new HomeIndexViewModel
-            {
-                Cities = await _context.Cities.Select(x => new CityViewModel {Id = x.Id, Name = x.Name}).ToListAsync(),
-                FuelTypes = await _context.FuelTypes.ToDictionaryAsync(x => x.Id, x => x.Name),
-                Categories = await _context.Categories.Select(x=> new CategoryViewModel { Id = x.Id, Name = x.Name}).ToListAsync()
-            };
-            return View(model);
+                {
+                    Cities = await _context.Cities.Select(x => new CityViewModel {Id = x.Id, Name = x.Name}).ToListAsync(),
+                    FuelTypes = await _context.FuelTypes.ToDictionaryAsync(x => x.Id, x => x.Name),
+                    Categories = await _context.Categories.Select(x=> new CategoryViewModel { Id = x.Id, Name = x.Name}).ToListAsync()
+                };
+                return View(model);
         }
 
         public IActionResult Privacy()

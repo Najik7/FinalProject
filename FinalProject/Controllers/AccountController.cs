@@ -68,7 +68,11 @@ namespace FinalProject.Controllers
             var user = new ApplicationUser()
             {
                 Email = model.Email,
-                UserName = model.Login
+                UserName = model.Login,
+                PhoneNumber = model.PhoneNumber,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DOB
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);

@@ -5,32 +5,73 @@
     Layout = "_Layout";
 }
 
-<form action="Create" method="post">
-    <div>
-        <input type="date" asp-for="FromDate"/>
+
+<div class="row">
+    <div class="text-danger" asp-validation-summary="All">
     </div>
-    <div>
-        <input type="date" asp-for="TilDate"/>
-    </div>
-    <div>
-        <input type="hidden" asp-for="CarId"/>
-    </div>
-    <div>
-        <label asp-for="HasAdditionalDriver"></label>
-        <input type="checkbox" asp-for="HasAdditionalDriver"/>
-        <p>+150</p>
-    </div>
-    <div>
-        <label asp-for="HasKidChair"></label>
-        <input type="checkbox" asp-for="HasKidChair"/>
-        <p>+50</p>
-    </div>
-    <div>
-        <label asp-for="HasInsurance"></label>
-        <input type="checkbox" asp-for="HasInsurance">
-        <p>+500</p>
-    </div>
-    <div>
-        <input type="submit" value="Создать"/>
-    </div>
-</form>
+        <div class="col-md-4"></div>
+        <div class="col-md-4" style="margin-top:100px">
+            <form class="form-group" action="Create" method="post">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: #1b6ec2">Бронирование</h5>
+                        <div class="form-group">
+                            <label>С:</label>
+                            <input type="date" asp-for="FromDate" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>ДО:</label>
+                            <input type="date" asp-for="TilDate" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" asp-for="CarId" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="HasAdditionalDriver">Дополнительный водитель +50 TJS:</label>
+                            <input type="checkbox" asp-for="HasAdditionalDriver" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="HasInsurance">Страховка +500 TJS:</label>
+                            <input type="checkbox" asp-for="HasInsurance" class="form-control">
+                        </div>
+                       
+                        <input type="submit" class="btn btn-primary" value="Забронировать"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+</div>
+
+
+
+@* <form action="Create" method="post"> *@
+@*     <div> *@
+@*         <input type="date" asp-for="FromDate"/> *@
+@*     </div> *@
+@*     <div> *@
+@*         <input type="date" asp-for="TilDate"/> *@
+@*     </div> *@
+@*     <div> *@
+@*         <input type="hidden" asp-for="CarId"/> *@
+@*     </div> *@
+@*     <div> *@
+@*         <label asp-for="HasAdditionalDriver"></label> *@
+@*         <input type="checkbox" asp-for="HasAdditionalDriver"/> *@
+@*         <p>+150 TJS</p> *@
+@*     </div> *@
+@*     <div> *@
+@*         <label asp-for="HasKidChair"></label> *@
+@*         <input type="checkbox" asp-for="HasKidChair"/> *@
+@*         <p>+50 TJS</p> *@
+@*     </div> *@
+@*     <div> *@
+@*         <label asp-for="HasInsurance"></label> *@
+@*         <input type="checkbox" asp-for="HasInsurance"> *@
+@*         <p>+500 TJS</p> *@
+@*     </div> *@
+@*     <div> *@
+@*         <input type="submit" value="Создать"/> *@
+@*     </div> *@
+@* </form> *@
+

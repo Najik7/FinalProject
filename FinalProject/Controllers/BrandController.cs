@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FinalProject.Context;
 using FinalProject.Context.Models;
 using FinalProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,7 @@ namespace FinalProject.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateBrandViewModel model)
         {
@@ -59,6 +61,7 @@ namespace FinalProject.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditBrandViewModel model)
         {
@@ -80,6 +83,7 @@ namespace FinalProject.Controllers
             return RedirectToAction("GetAll");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var brand = await _context.Brands.FindAsync(id);

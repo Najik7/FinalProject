@@ -5,23 +5,26 @@
 
 <div class="text-center">
     <h1 class="display-4">Добро пожаловать на сайт бронирования авто</h1>
+    @if (!User.IsInRole("Admin"))
+    {
+        
     <div class="row">
     <form style="width: 100%" action="/Car/GetAll" method="get" class="form-group">
-            <label for="cities">Город</label>
+            <label for="cities">Выберите Город</label>
             <select name="cityId" class="form-control" id="cities">
                 @foreach (var city in Model.Cities)
                 {
                     <option value="@city.Id">@city.Name</option>
                 }
             </select>
-            <label for="fuelTypes">Вид топлива</label>
+            <label for="fuelTypes">Выберите вид топлива</label>
         <select name="fuelTypeId" class="form-control" id="fuelTypes">
             @foreach (var fuelType in Model.FuelTypes)
             {
                 <option value="@fuelType.Key">@fuelType.Value</option>
             }
         </select>
-                    <label for="categories">Класс авто</label>
+                    <label for="categories">Выберите класс авто</label>
         <select name="categoryId" class="form-control" id="categories">
             @foreach (var category in Model.Categories)
             {
@@ -32,5 +35,7 @@
         <input type="submit" class="btn btn-outline-primary">
     </form>
     </div>
-    <img style="width: 100%;" src="~/images/X5.png" alt="">
+    }
+
+        <img style="width: 100%;" src="~/images/X5.png" alt="">
 </div>

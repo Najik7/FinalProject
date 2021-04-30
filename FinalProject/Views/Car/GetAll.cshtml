@@ -1,40 +1,101 @@
-﻿@model List<FinalProject.ViewModels.CarViewModel>
+﻿@model GetAllCarsViewModel
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-@foreach (var car in Model)
-{
-    <div>
-        <hr>
-        <a href="~/Order/Create?carId=@car.Id">Забронировать</a>
-        <h1>@car.Model</h1>
-        <p>@car.Doors</p>
-        <p>@car.Passengers</p>
-        <p>@car.BaggageCount</p>
-        <p>@car.BrandName</p>
-        <br>
-        <label for="canD">Можно депортировать</label>
-        <input id="canD" type="checkbox" checked="@(car.CanDeparture)">
-        <br>
-        <hr>
-        <p>города</p>
-        @foreach (var city in car.Cities)
-        {
-            <p>@city</p>
-        }
-        <hr>
-        <hr>
-        <p>тип топлива</p>
-        @foreach (var fuelType in car.FuelTypes)
-        {
-            <p>@fuelType</p>
-        }
-        <hr>
+<div class="row">
+    <form style="width: 100%" action="/Car/GetAll" method="get" class="form-group">
+        <label for="cities">Выберите Город</label>
+        <select name="cityId" class="form-control" id="cities">
+            <option value="0">Все</option>
+            @foreach (var city in Model.Cities)
+            {
+                <option value="@city.Id">@city.Name</option>
+            }
+        </select>
+        <label for="fuelTypes">Выберите вид топлива</label>
+        <select name="fuelTypeId" class="form-control" id="fuelTypes">
+                        <option value="0">Все</option>
 
-        <img width="250" src="@car.ImagePath" alt="">
-        @Html.ActionLink("Удалить", "Delete", "Car", new {id = car.Id})
+            @foreach (var fuelType in Model.FuelTypes)
+            {
+                <option value="@fuelType.Key">@fuelType.Value</option>
+            }
+        </select>
+        <label for="categories">Выберите класс авто</label>
+        <select name="categoryId" class="form-control" id="categories">
+                        <option value="0">Все</option>
+
+            @foreach (var category in Model.Categories)
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
+        </select>
+        
+        <input type="submit" class="btn btn-outline-primary">
+    </form>
+</div>
+
+
+<div class=" mt-3">
+    <div class="row">
+            
+            @foreach (var item in Model.Cars)
+            {
+                <div class="card " style="width: 18rem; margin: 10px;">
+                    <div style="height: 250px">
+                                            <img src="@item.ImagePath" style="height: auto;" class="card-img-top" alt="...">
+
+                    </div>
+                    <divv class="card-body" style="height: 830px">
+                        <h5 class="card-title">@item.BrandName</h5>
+                        <p class="card-text">Модель:       <strong>@item.Model</strong></p>
+                        <p class="card-text">Тип кузова:   <strong>@item.BodyTypeName</strong></p>
+                        <p class="card-text">Цена за день: <strong>@item.DailyPrice TJS</strong></p>
+                        
+                        <p>Условия по топливу:  @foreach (var fuelType in item.FuelTypes)
+                        { 
+                            <p>@fuelType</p> 
+                        } 
+                        </p>
+
+                        <p class="card-text">
+                            @if (@item.IsFree == true)
+                            {
+                                <p style="color: green">Свободно</p>
+                            }
+                            @if (@item.IsFree == false)
+                            {
+                                <p style="color: red">Занято</p>
+                            }
+                        </p>
+                        <p class="card-text">Двевери: <strong>@item.Doors</strong></p>
+                        <p class="card-text">Место: <strong>@item.Passengers</strong></p>
+                        <p class="card-text">Суммки: <strong>@item.BaggageCount</strong></p>
+                        <p class="card-text">Возраст от: <strong>@item.FromAge</strong></p>
+                        <p class="card-text">Возрасть до: <strong>@item.TilAge</strong></p>
+                        
+                        <br> 
+                           <label for="canD">Выезд за город:</label> 
+                           <input id="canD" type="checkbox" checked="@(item.CanDeparture)"> 
+                        <br>
+                        <hr> 
+                        <p>Города:</p> 
+                        @foreach (var city in item.Cities) 
+                        { 
+                            <p>Город: @city</p>
+                        } 
+                    <hr> 
+                                        </divv>
+
+                    <div class="card-footer">
+                                                    <a class="btn btn-primary" href="~/Order/Create?carId=@item.Id">Забронировать</a>
+
+                        </div>
+                </div>
+            }
     </div>
-}
+
+</div>
