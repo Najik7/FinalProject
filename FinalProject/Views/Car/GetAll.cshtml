@@ -8,6 +8,8 @@
 @foreach (var car in Model)
 {
     <div>
+        <hr>
+        <a href="~/Order/Create?carId=@car.Id">Забронировать</a>
         <h1>@car.Model</h1>
         <p>@car.Doors</p>
         <p>@car.Passengers</p>
@@ -25,14 +27,14 @@
         }
         <hr>
         <hr>
-                <p>тип топлива</p>
-                @foreach (var fuelType in car.FuelTypes)
-                {
-                    <p>@fuelType</p>
-                }
+        <p>тип топлива</p>
+        @foreach (var fuelType in car.FuelTypes)
+        {
+            <p>@fuelType</p>
+        }
         <hr>
-        
+
         <img width="250" src="@car.ImagePath" alt="">
-        @Html.ActionLink("Удалить","Delete","Car", new {id = car.Id})
+        @Html.ActionLink("Удалить", "Delete", "Car", new {id = car.Id})
     </div>
 }

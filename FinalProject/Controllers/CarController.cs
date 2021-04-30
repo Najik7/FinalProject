@@ -116,14 +116,17 @@ namespace FinalProject.Controllers
 
         
         
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int cityId, int fuelTypeId,int categoryId)
         {
             var cars = await _context.Cars
+                .Include(x => x.CarCities).ThenInclude(x => x.City)
+                .Include(x => x.CarFuelTypes).ThenInclude(x => x.FuelType)
+                .Where(x=> (cityId == 0 || x.CarCities.Select(c=>c.CityId).Contains(cityId)) 
+                           && (fuelTypeId == 0 || x.CarFuelTypes.Select(f=>f.FuelTypeId).Contains(fuelTypeId)) 
+                           && (categoryId == 0 || x.CategoryId == categoryId))
                 .Include(x => x.Brand)
                 .Include(x => x.Category)
                 .Include(x => x.BodyType)
-                .Include(x => x.CarCities).ThenInclude(x => x.City)
-                .Include(x => x.CarFuelTypes).ThenInclude(x => x.FuelType)
                 .Select(x => new CarViewModel()
                 {
                     Id = x.Id,
